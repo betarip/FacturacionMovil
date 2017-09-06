@@ -13,35 +13,7 @@ public class Colores {
         return color;
     }
 
-    public static String darker(int color) {
-        int c = Integer.valueOf(String.valueOf(color), 16);
-        int cDarker = (c - 0x110000);
-        String hexColor = String.format("#%06X", (0xFFFFFF & cDarker));
-        return hexColor;
-    }
 
-    public static String lighter(int color) {
-        int c = Integer.valueOf(String.valueOf(color), 16);
-        int cLighter = (c + 0x110000);
-        String hexColor = String.format("#%06X", (0xFFFFFF & cLighter));
-        return hexColor;
-    }
-
-    public static String lighter(int color, float factor) {
-        int red = (int) ((Color.red(color) * (1 - factor) / 255 + factor) * 255);
-        int green = (int) ((Color.green(color) * (1 - factor) / 255 + factor) * 255);
-        int blue = (int) ((Color.blue(color) * (1 - factor) / 255 + factor) * 255);
-        int argb = Color.argb(Color.alpha(color), red, green, blue);
-        return String.format("#%06X", (0xFFFFFF & argb));
-    }
-
-    public static String darker(int color, float factor) {
-        int red = (int) ((Color.red(color) * (1 + factor) / 255 - factor) * 255);
-        int green = (int) ((Color.green(color) * (1 + factor) / 255 - factor) * 255);
-        int blue = (int) ((Color.blue(color) * (1 + factor) / 255 - factor) * 255);
-        int argb = Color.argb(Color.alpha(color), red, green, blue);
-        return String.format("#%06X", (0xFFFFFF & argb));
-    }
 
     public static int manipuleColor(int color, float factor) {
         int a = Color.alpha(color);
