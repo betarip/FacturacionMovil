@@ -13,7 +13,7 @@ public class Colores {
         return color;
     }
 
-
+   
 
     public static int manipuleColor(int color, float factor) {
         int a = Color.alpha(color);
