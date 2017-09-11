@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class FacturarCompra extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class FacturarCompra extends AppCompatActivity {
     final Context context = this;
     private Franquicia itemDetallado;
     private View view;
+    private Button buscarCliente, mostrarCliente, mostrarCompra, facturar;
 
 
     @Override
@@ -26,7 +28,7 @@ public class FacturarCompra extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.facturar_compra);
         itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ActividadDetalle.ID_FRANQUICIA, 0));
-        view = (LinearLayout) findViewById(R.id.principal);
+        view = findViewById(R.id.principal);
         usarToolbar();
 
     }

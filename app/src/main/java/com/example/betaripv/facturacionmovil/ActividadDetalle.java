@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,32 +54,31 @@ public class ActividadDetalle extends AppCompatActivity {
     private Franquicia itemDetallado;
     private ImageView imagenExtendida;
     private TextView nombreFranquicia;
-    private View view;
+    private LinearLayout view;
     private String colorTexto;
+    private Button btnBuscar, btnDetalles;
+    private EditText itu;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_detalle);
+        view = (LinearLayout) findViewById(R.id.activityDetalle);
 
 
         itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ID_FRANQUICIA, 0));
-        view = (LinearLayout) findViewById(R.id.principal);
 
+        view.setBackgroundColor(Color.parseColor(getResources().getString(R.color.backgroundColor)));
+        btnBuscar = (Button) findViewById(R.id.btnBuscar);
+        btnDetalles = (Button) findViewById(R.id.btnDetalles);
+        itu = (EditText) findViewById(R.id.textITU);
+        Colores.setColoresBtn(btnBuscar, itemDetallado);
+        Colores.setColoresBtn(btnDetalles, itemDetallado);
+        Colores.setColoresEdit(itu,itemDetallado,R.color.backgroundColor);
         //SET colores de la franquicia
 
         colorTexto = Colores.textColor(Color.parseColor(itemDetallado.getColorPrincipal()));
-        /*
-
-        String colorMedio = getResources().getString(R.color.medium);
-        if(itemDetallado.getColorPrincipal().compareTo(colorMedio)>0){
-            colorTexto = getResources().getString(R.color.textLight);
-        }else if(itemDetallado.getColorPrincipal().compareTo(colorMedio)<0){
-            colorTexto = getResources().getString(R.color.textDark);
-        }else{
-            colorTexto = getResources().getString(R.color.textLight);
-        }*/
         usarToolbar();
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -87,30 +87,26 @@ public class ActividadDetalle extends AppCompatActivity {
             w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             w.setStatusBarColor(itemDetallado.getColorPrincipalDark());
         }
-        view.setBackgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
+
+
 
 
         //obtener la franquicia con el identificador establecido en la actividad principal
 
-        nombreFranquicia = (TextView) findViewById(R.id.nombre_franquicia);
-        imagenExtendida = (ImageView) findViewById(R.id.imagen_extendida);
+
 
         //cargarImagenExtendida();
         cargarDatosFranquicia();
     }
 
-    private void cargarImagenExtendida() {
-        imagenExtendida.setImageResource(itemDetallado.getIdDrawable());
-    }
-
     private void cargarDatosFranquicia() {
-
-
-        //imagenExtendida.setImageResource(itemDetallado.getIdDrawable());
+        nombreFranquicia = (TextView) findViewById(R.id.nombre_franquicia);
+        imagenExtendida = (ImageView) findViewById(R.id.imagen_extendida);
         byte[] decodeImage = Base64.decode(itemDetallado.getImagen().getBytes(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodeImage, 0, decodeImage.length);
         imagenExtendida.setImageBitmap(decodedByte);
         nombreFranquicia.setText(itemDetallado.getNombre());
+        nombreFranquicia.setTextColor(Color.parseColor(Colores.textColor(Color.parseColor(getResources().getString(R.color.backgroundColor)))));
     }
 
     private void usarToolbar() {
@@ -127,17 +123,12 @@ public class ActividadDetalle extends AppCompatActivity {
     * */
     public void mostrarDetallesFranquicia(View view) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_detalles_franquicia, null);
-
-
         alertDialog.setView(dialogView);
         TextView textViewRfc = (TextView) dialogView.findViewById(R.id.rfc);
         //TextView textViewNombreRazon = (TextView) dialogView.findViewById(R.id.nombre_franquicia);
-
         textViewRfc.setText(itemDetallado.getNombre());
-
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -155,12 +146,14 @@ public class ActividadDetalle extends AppCompatActivity {
     * */
 
     public void buscarCompra(View view) {
-        String urlBase = "http://192.168.0.100/Tesis";
-        // /String urlBase ="http://pueblaroja.mx/pruebas";
+        //String urlBase = "http://192.168.0.100/Tesis";
+        String urlBase ="http://pueblaroja.mx/pruebas";
         String url = "/WebService/buscarCompra.php";
-        EditText itu = (EditText) findViewById(R.id.textITU);
+
         String numeroITU = itu.getText().toString();
-        peticion(urlBase + url, numeroITU);
+        if(!numeroITU.equals("")) {
+            peticion(urlBase + url, numeroITU);
+        }
     }
 
     private void peticion(String url, final String... par) {

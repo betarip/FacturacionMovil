@@ -38,7 +38,7 @@
             android:layout_weight="0.98" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnBusCliente"
             android:layout_width="181dp"
             android:layout_height="match_parent"
             android:text="Buscar Cliente" />
@@ -47,6 +47,7 @@
 
 
     <Button
+        android:id="@+id/btnDeCli"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Detalle del cliente"
@@ -54,12 +55,14 @@
 
 
     <Button
+        android:id="@+id/btnDeCom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Detalle de la compra" />
 
 
     <Button
+        android:id="@+id/btnDeFac"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Facturar"

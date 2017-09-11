@@ -11,7 +11,7 @@ public class Compra {
     private String total;
     private String subtotal;
 
-    public static ArrayList<Compra> compras = new ArrayList<Compra>();
+    private static Compra compraSelect;
 
     Compra(String idCompra) {
         this.setIdCompra(idCompra);
@@ -22,12 +22,14 @@ public class Compra {
         return getIdCompra().hashCode();
     }
 
-    public static Compra getItem(int id) {
-        for (Compra c : compras) {
-            if (c.getID() == id)
-                return c;
-        }
-        return null;
+    public static Compra getCompraSelect (){
+        return compraSelect;
+
+    }
+
+    public static void setCompraSelect(Compra compraSelect){
+        Compra n = getCompraSelect();
+        n = compraSelect;
     }
 
     public String getIdCompra() {
@@ -54,13 +56,7 @@ public class Compra {
         this.total = total;
     }
 
-    public static ArrayList<Compra> getCompras() {
-        return compras;
-    }
 
-    public static void setCompras(ArrayList<Compra> compras) {
-        Compra.compras = compras;
-    }
 
 
 }

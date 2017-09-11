@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/principal"
-
+    android:id="@+id/activityDetalle"
     >
 
     <android.support.v7.widget.Toolbar
@@ -52,6 +51,7 @@
             android:layout_gravity="center_horizontal" />
 
         <Button
+            android:id="@+id/btnDetalles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="mostrarDetallesFranquicia"
@@ -81,6 +81,7 @@
             android:maxLength="20" />
 
         <Button
+            android:id="@+id/btnBuscar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Buscar"

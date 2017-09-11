@@ -36,8 +36,8 @@ public class Splash extends AppCompatActivity {
 
     public static final String TAG = Splash.class.getSimpleName();
     ProgressDialog pDialog;
-    public String urlBase = "http://192.168.0.100/Tesis/";
-    //public String urlBase ="http://pueblaroja.mx/pruebas";
+    //public String urlBase = "http://192.168.0.100/Tesis/";
+    public String urlBase ="http://pueblaroja.mx/pruebas";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +116,7 @@ public class Splash extends AppCompatActivity {
         builder.setMessage("Error al conectar con el servicio");
         builder.setPositiveButton("Re - Intentar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                urlBase = "http://192.168.0.101/Tesis/";
+                //urlBase = "http://192.168.0.101/Tesis/";
                 peticionVolley(urlBase + "/WebService/obtenerFranquicias.php");
             }
         });
