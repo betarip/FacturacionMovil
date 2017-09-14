@@ -11,7 +11,7 @@ public class Compra {
     private String total;
     private String subtotal;
 
-    private static Compra compraSelect;
+    public static Compra compraSelect;
 
     Compra(String idCompra) {
         this.setIdCompra(idCompra);
@@ -28,8 +28,7 @@ public class Compra {
     }
 
     public static void setCompraSelect(Compra compraSelect){
-        Compra n = getCompraSelect();
-        n = compraSelect;
+       Compra.compraSelect = compraSelect;
     }
 
     public String getIdCompra() {

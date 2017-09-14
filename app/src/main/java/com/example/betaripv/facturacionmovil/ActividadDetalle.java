@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,6 +34,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.betaripv.facturacionmovil.utilerias.Colores;
+import com.example.betaripv.facturacionmovil.utilerias.ServicioWeb;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +58,7 @@ public class ActividadDetalle extends AppCompatActivity {
     private TextView nombreFranquicia;
     private LinearLayout view;
     private String colorTexto;
+    private String colorFondo;
     private Button btnBuscar, btnDetalles;
     private EditText itu;
 
@@ -68,14 +71,15 @@ public class ActividadDetalle extends AppCompatActivity {
 
 
         itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ID_FRANQUICIA, 0));
+        colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
 
-        view.setBackgroundColor(Color.parseColor(getResources().getString(R.color.backgroundColor)));
+        view.setBackgroundColor(Color.parseColor(colorFondo));
         btnBuscar = (Button) findViewById(R.id.btnBuscar);
         btnDetalles = (Button) findViewById(R.id.btnDetalles);
         itu = (EditText) findViewById(R.id.textITU);
         Colores.setColoresBtn(btnBuscar, itemDetallado);
         Colores.setColoresBtn(btnDetalles, itemDetallado);
-        Colores.setColoresEdit(itu,itemDetallado,R.color.backgroundColor);
+        Colores.setColoresEdit(itu,itemDetallado,colorFondo);
         //SET colores de la franquicia
 
         colorTexto = Colores.textColor(Color.parseColor(itemDetallado.getColorPrincipal()));
@@ -88,14 +92,6 @@ public class ActividadDetalle extends AppCompatActivity {
             w.setStatusBarColor(itemDetallado.getColorPrincipalDark());
         }
 
-
-
-
-        //obtener la franquicia con el identificador establecido en la actividad principal
-
-
-
-        //cargarImagenExtendida();
         cargarDatosFranquicia();
     }
 
@@ -106,7 +102,7 @@ public class ActividadDetalle extends AppCompatActivity {
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodeImage, 0, decodeImage.length);
         imagenExtendida.setImageBitmap(decodedByte);
         nombreFranquicia.setText(itemDetallado.getNombre());
-        nombreFranquicia.setTextColor(Color.parseColor(Colores.textColor(Color.parseColor(getResources().getString(R.color.backgroundColor)))));
+        nombreFranquicia.setTextColor(Color.parseColor(Colores.textColor(Color.parseColor(colorFondo))));
     }
 
     private void usarToolbar() {
@@ -147,12 +143,20 @@ public class ActividadDetalle extends AppCompatActivity {
 
     public void buscarCompra(View view) {
         //String urlBase = "http://192.168.0.100/Tesis";
-        String urlBase ="http://pueblaroja.mx/pruebas";
-        String url = "/WebService/buscarCompra.php";
+        //String urlBase ="http://pueblaroja.mx/pruebas";
+        //String url = "/WebService/buscarCompra.php";
 
         String numeroITU = itu.getText().toString();
-        if(!numeroITU.equals("")) {
-            peticion(urlBase + url, numeroITU);
+        if(!numeroITU.equals("") && numeroITU.length() == 20) {
+            peticion(ServicioWeb.urlBase + ServicioWeb.COMPRA, numeroITU);
+        }else{
+            String mensaje;
+            if(numeroITU.equals("")){
+                mensaje = "Se debe introducir un ITU";
+            }else{
+                mensaje ="Numero de ITU incompleto";
+            }
+            Toast.makeText(this,mensaje, Toast.LENGTH_LONG);
         }
     }
 
@@ -177,16 +181,21 @@ public class ActividadDetalle extends AppCompatActivity {
                                 JSONObject compra = jsonResponse.getJSONObject("datos");
                                 String idCompra = compra.getString("id_compra");
                                 String idFranquicia = compra.getString("id_franquicia");
-                                if (idFranquicia.equals(itemDetallado.getIdFranquicia())) {
+                                //if (idFranquicia.equals(itemDetallado.getIdFranquicia())) {
                                     intent = new Intent(context, FacturarCompra.class);
+                                    Compra c = new Compra(idCompra);
+                                    c.setSubtotal(compra.getString("subtotal"));
+                                    c.setTotal(compra.getString("total"));
+                                    Compra.setCompraSelect(c);
                                     intent.putExtra(FacturarCompra.ID_COMPRA, idCompra);
                                     intent.putExtra(ActividadDetalle.ID_FRANQUICIA, itemDetallado.getId());
                                     startActivity(intent);
+                                /*
                                 } else {
                                     Log.d(TAG, "" + idFranquicia + "//" + itemDetallado.getIdFranquicia());
                                     cargarDialog("No corresponde la franquicia con el ITU");
                                 }
-
+        */
                             } else {
                                 Log.d(TAG, "*******************    Error     *****************************");
                                 Log.d(TAG, "" + jsonResponse.getString("error"));
