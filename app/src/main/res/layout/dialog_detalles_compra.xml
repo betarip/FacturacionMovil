@@ -4,31 +4,23 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imagen_franquicia"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:scaleType="center"
-        android:background="#FFFFBB33"
-        android:contentDescription="@string/app_name" />
-
     <TextView
-        android:id="@+id/rfc"
+        android:id="@+id/total"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp" />
-
+        android:layout_marginBottom="4dp"
+        android:text="Total: $"/>
     <TextView
-        android:id="@+id/razon_nombre"
+        android:id="@+id/subtotal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp" />
-
-
+        android:layout_marginBottom="4dp"
+        android:text="Subtotal: $"
+        />
 </LinearLayout>
