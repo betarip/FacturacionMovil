@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:id="@+id/principal">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:id="@+id/toolbar"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/espacio_grid"
+        >
+
+        <ScrollView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_weight="0.95">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:orientation="vertical"
+
+                >
+
+                <TextView
+                    android:id="@+id/tvDatosCliente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Datos del Cliente"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textRFC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textRFC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="RFC"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nombre o Razon Social"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textCorreo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textCorreo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Correo electronico"
+                        android:inputType="textEmailAddress"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Domicilio del cliente"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textCalle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textCalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Calle"
+
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/layout_textNumInt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:paddingLeft="5px"
+                        >
+
+                        <EditText
+                            android:id="@+id/textNumInt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Número Interior"
+                            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/layout_textNumExt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:paddingRight="5px"
+                        >
+
+                        <EditText
+                            android:id="@+id/textNumExt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Número exterior"
+                            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                </LinearLayout>
+
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textColonia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textColonia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Colonia"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textLocalidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textLocalidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Localidad"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textRef"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textRef"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Referencia"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textMun"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textMun"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Municipio"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textEsta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textEsta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Estado"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textPais"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textPais"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Pais"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_textCp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/textCP"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Código postal"
+                        android:inputType="number"
+                        android:maxLength="5"
+
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+        <Button
+            android:layout_alignParentBottom="true"
+            android:id="@+id/btnRegistar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar Cliente"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:onClick="registar"
+            android:layout_weight="0.05"
+            />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

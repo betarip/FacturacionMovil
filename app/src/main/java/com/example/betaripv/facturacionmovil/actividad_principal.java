@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.example.betaripv.facturacionmovil.clases.Franquicia;
+
 public class actividad_principal extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private GridView gridView;

@@ -2,12 +2,20 @@ package com.example.betaripv.facturacionmovil.utilerias;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import android.support.annotation.ColorInt;
+import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.betaripv.facturacionmovil.Franquicia;
+import com.example.betaripv.facturacionmovil.R;
+import com.example.betaripv.facturacionmovil.clases.Franquicia;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by ivan on 05/09/2017.
@@ -19,7 +27,8 @@ public class Colores {
             new int[] { android.R.attr.state_enabled}, // enabled
             new int[] {-android.R.attr.state_enabled}, // disabled
             new int[] {-android.R.attr.state_checked}, // unchecked
-            new int[] { android.R.attr.state_pressed}  // pressed
+            new int[] { android.R.attr.state_pressed},  // pressed
+
     };
 
     public static int hexToIInt(String colorStr) {
@@ -97,6 +106,7 @@ public class Colores {
                 Color.parseColor(textColor(Color.parseColor(f.getColorSecundario()))),
                 Color.parseColor(textColor(Color.parseColor(f.getColorSecundario()))),
         };
+
         if (Build.VERSION.SDK_INT >= 21) {
             btn.setBackgroundTintList(new ColorStateList(states, colorsBtn));
             btn.setTextColor(new ColorStateList(states, colorsTxt));
@@ -107,13 +117,69 @@ public class Colores {
 
     }
 
-    public static void setColoresEdit(EditText edt, Franquicia f, String fondo) {
+    public static void setColoresEdit(EditText edt, Franquicia f, final String fondo) {
 
         //edt.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
         int colorFondo = Color.parseColor(fondo);
         edt.setTextColor(Color.parseColor(textColor(colorFondo)));
-        edt.setHintTextColor(Color.parseColor(textColor(colorFondo)));
+        edt.setHintTextColor(Color.GREEN);
+        //edt.set
+        //edt.setHintTextColor();
 
+        int[] colors = new int[] {
+                f.getColorSecundarioLight(),
+                Color.YELLOW,
+                f.getColorSecundarioLight(),
+                Color.parseColor(f.getColorSecundario()),
+        };
+
+        int[] colorsP = new int[] {
+                f.getColorPrincipalLight(),
+                Color.RED,
+                f.getColorPrincipalLight(),
+                Color.BLUE
+        };
+        /*
+        Drawable drawable = edt.getBackground(); // get current EditText drawable
+        //edt.setBackgroundTintList();
+        drawable.setColorFilter(Color.parseColor(f.getColorPrincipal()), PorterDuff.Mode.SRC_ATOP);
+        if(Build.VERSION.SDK_INT > 16) {
+            edt.setBackground(drawable); // set the new drawable to EditText
+            //edt.setB
+        }else{
+            edt.setBackgroundDrawable(drawable); // use setBackgroundDrawable because setBackground required API 16
+        }
+*/
+        if (Build.VERSION.SDK_INT >= 21) {
+            edt.setBackgroundTintList(new ColorStateList(states, colors));
+            //edt.setHintTextColor(new ColorStateList(states, colorsP));
+            //edt.setForegroundTintList(new ColorStateList(states, colors));
+            //edt.setTi
+            //edt.setHintTextColor(new ColorStateList(states, colors));
+        }else {
+            edt.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
+        }
+
+
+
+    }
+
+    public static void setColoresLayout(TextInputLayout til, Franquicia f, String fondo) {
+
+        //edt.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
+        int colorFondo = Color.parseColor(fondo);
+        int resId =0;
+        if(fondo.equals("#212121") )
+            resId = R.color.textDark;
+        else
+            resId = R.color.textLight;
+        //til.setHintTextAppearance();
+        //til.setTextColor(Color.parseColor(textColor(colorFondo)));
+        til.setHintTextAppearance(R.color.textLight);
+        //til.setBackgroundColor(Color.BLUE);
+        //til.setHintTextColor(Color.parseColor(textColor(colorFondo)));
+        //til.setT e
+        /*
         int[] colors = new int[] {
                 f.getColorSecundarioLight(),
                 Color.RED,
@@ -121,10 +187,30 @@ public class Colores {
                 Color.parseColor(f.getColorSecundario()),
         };
         if (Build.VERSION.SDK_INT >= 21) {
-            edt.setBackgroundTintList(new ColorStateList(states, colors));
+            til.setBackgroundTintList(new ColorStateList(states, colors));
+
+        }else {
+            til.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
         }
+*/
     }
 
 
     //public static void configurarBoton()
+
+
+    public static void setInputTextLayoutColor(EditText editText, @ColorInt int color) {
+        TextInputLayout til = (TextInputLayout) editText.getParent();
+        try {
+            Field fDefaultTextColor = TextInputLayout.class.getDeclaredField("mDefaultTextColor");
+            fDefaultTextColor.setAccessible(true);
+            fDefaultTextColor.set(til, new ColorStateList(new int[][]{{0}}, new int[]{ color }));
+
+            Field fFocusedTextColor = TextInputLayout.class.getDeclaredField("mFocusedTextColor");
+            fFocusedTextColor.setAccessible(true);
+            fFocusedTextColor.set(til, new ColorStateList(new int[][]{{0}}, new int[]{ color }));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

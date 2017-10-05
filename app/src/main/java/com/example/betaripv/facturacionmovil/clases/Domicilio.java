@@ -1,4 +1,4 @@
-package com.example.betaripv.facturacionmovil;
+package com.example.betaripv.facturacionmovil.clases;
 
 /**
  * Created by betaripv on 13/09/17.
@@ -13,6 +13,7 @@ public class Domicilio {
     private String localidad;
     private String ref;
     private String municipio;
+    private String estado;
     private String pais;
     private String cp;
 
@@ -82,6 +83,14 @@ public class Domicilio {
 
     public void setMunicipio(String municipio) {
         this.municipio = municipio;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getPais() {

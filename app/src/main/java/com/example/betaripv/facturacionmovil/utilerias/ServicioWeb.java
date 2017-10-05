@@ -7,12 +7,13 @@ package com.example.betaripv.facturacionmovil.utilerias;
 public class ServicioWeb {
 
 
-    public static String urlBase = "http://192.168.0.100/Tesis/WebService/";
-    //public static String urlBase ="http://pueblaroja.mx/pruebas/WebService/";
+    //public static String urlBase = "http://192.168.0.101/Tesis/WebService/";
+    public static String urlBase ="http://pueblaroja.mx/pruebas/WebService/";
 
     public static String FRANQUICIAS ="obtenerFranquicias.php";
     public static String COMPRA ="buscarCompra.php";
     public static String CLIENTE ="obtenerCliente.php";
+    public static String REGISTRAR_CLIENTE ="registrarCliente.php";
 
 
 }

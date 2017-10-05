@@ -14,6 +14,13 @@
         <item name="android:windowBackground">@color/background</item>
     </style>
 
+    <style name="TextAppearence.App.TextInputLayoutLight" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/textLight</item>
+    </style>
+    <style name="TextAppearence.App.TextInputLayoutDark" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />∫

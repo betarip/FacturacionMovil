@@ -4,11 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,28 +19,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.betaripv.facturacionmovil.clases.Compra;
+import com.example.betaripv.facturacionmovil.clases.Franquicia;
 import com.example.betaripv.facturacionmovil.utilerias.Colores;
 import com.example.betaripv.facturacionmovil.utilerias.ServicioWeb;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,27 +61,45 @@ public class ActividadDetalle extends AppCompatActivity {
     private Button btnBuscar, btnDetalles;
     private EditText itu;
 
+    private TextInputLayout layoutITU;
+
+    Animation anim;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ID_FRANQUICIA, 0));
+        colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_detalle);
         view = (LinearLayout) findViewById(R.id.activityDetalle);
 
 
-        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ID_FRANQUICIA, 0));
-        colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
+        //itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ID_FRANQUICIA, 0));
+        if(colorFondo.equals("#212121") )
+            setTheme(R.style.TextAppearence_App_TextInputLayoutDark);
+        else
+            setTheme(R.style.TextAppearence_App_TextInputLayoutLight);
+
+
 
         view.setBackgroundColor(Color.parseColor(colorFondo));
         btnBuscar = (Button) findViewById(R.id.btnBuscar);
         btnDetalles = (Button) findViewById(R.id.btnDetalles);
         itu = (EditText) findViewById(R.id.textITU);
+        layoutITU = (TextInputLayout) findViewById(R.id.layout_textITU);
+        //anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        colorTexto = Colores.textColor(Color.parseColor(itemDetallado.getColorPrincipal()));
+
+        Colores.setColoresLayout(layoutITU,itemDetallado,colorFondo);
         Colores.setColoresBtn(btnBuscar, itemDetallado);
         Colores.setColoresBtn(btnDetalles, itemDetallado);
         Colores.setColoresEdit(itu,itemDetallado,colorFondo);
         //SET colores de la franquicia
+        //layoutITU.setHintTextAppearance(Color.parseColor(colorTexto));
 
-        colorTexto = Colores.textColor(Color.parseColor(itemDetallado.getColorPrincipal()));
+
         usarToolbar();
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -93,6 +110,21 @@ public class ActividadDetalle extends AppCompatActivity {
         }
 
         cargarDatosFranquicia();
+    }
+
+    private boolean revisarITU(){
+        String numITU = itu.getText().toString().trim();
+        if(numITU.isEmpty() || numITU.length() != 20 ){
+            layoutITU.setErrorEnabled(true);
+            layoutITU.setError("ITU invalido");
+            itu.setAnimation(anim);
+            itu.startAnimation(anim);
+            //itu.setError("");
+            return false;
+        }else{
+            layoutITU.setErrorEnabled(false);
+            return true;
+        }
     }
 
     private void cargarDatosFranquicia() {
@@ -125,6 +157,9 @@ public class ActividadDetalle extends AppCompatActivity {
         TextView textViewRfc = (TextView) dialogView.findViewById(R.id.rfc);
         //TextView textViewNombreRazon = (TextView) dialogView.findViewById(R.id.nombre_franquicia);
         textViewRfc.setText(itemDetallado.getNombre());
+        ImageView imagenDialog= (ImageView) findViewById(R.id.imagenFranquiciaDialog);
+        byte[] decodeImage = Base64.decode(itemDetallado.getImagen().getBytes(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodeImage, 0, decodeImage.length);
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -145,8 +180,12 @@ public class ActividadDetalle extends AppCompatActivity {
         //String urlBase = "http://192.168.0.100/Tesis";
         //String urlBase ="http://pueblaroja.mx/pruebas";
         //String url = "/WebService/buscarCompra.php";
-
         String numeroITU = itu.getText().toString();
+        if(revisarITU()){
+            peticion(ServicioWeb.urlBase + ServicioWeb.COMPRA, numeroITU);
+        }
+        /*
+
         if(!numeroITU.equals("") && numeroITU.length() == 20) {
             peticion(ServicioWeb.urlBase + ServicioWeb.COMPRA, numeroITU);
         }else{
@@ -158,6 +197,7 @@ public class ActividadDetalle extends AppCompatActivity {
             }
             Toast.makeText(this,mensaje, Toast.LENGTH_LONG);
         }
+        */
     }
 
     private void peticion(String url, final String... par) {
@@ -199,6 +239,7 @@ public class ActividadDetalle extends AppCompatActivity {
                             } else {
                                 Log.d(TAG, "*******************    Error     *****************************");
                                 Log.d(TAG, "" + jsonResponse.getString("error"));
+                                cargarDialog(jsonResponse.getString("error"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

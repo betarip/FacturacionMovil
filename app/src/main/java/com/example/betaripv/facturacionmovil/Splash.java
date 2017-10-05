@@ -9,7 +9,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.betaripv.facturacionmovil.clases.Franquicia;
 import com.example.betaripv.facturacionmovil.utilerias.ServicioWeb;
 
 import org.json.JSONArray;
@@ -29,8 +29,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-
-import javax.net.ssl.HttpsURLConnection;
 
 
 public class Splash extends AppCompatActivity {

@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:id="@+id/activityDetalle"
     >
 
@@ -60,16 +62,22 @@
         android:padding="@dimen/espacio_grid"
         android:paddingTop="16dp"
         android:layout_gravity="top">
-
-        <EditText
-            android:id="@+id/textITU"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_textITU"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="ITU"
-            android:inputType="number"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:maxLength="20" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/textITU"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ITU"
+                android:inputType="number"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:maxLength="20" />
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <Button
             android:id="@+id/btnBuscar"

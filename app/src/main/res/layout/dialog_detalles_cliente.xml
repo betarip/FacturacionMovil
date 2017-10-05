@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/titulo"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="16dp"
+        android:text="Datos del cliente"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+
+    <TextView
+        android:id="@+id/rfc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="16dp"
+        android:text="RFC" />
+
+    <TextView
+        android:id="@+id/razon_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp"
+        android:text="nombre o razon social" />
+
+    <TextView
+        android:id="@+id/correo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp"
+        android:text="correo" />
+
+    <TextView
+        android:id="@+id/calle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp"
+        android:text="calle" />
+
+    <TextView
+        android:id="@+id/referencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:text="Referencia" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+
+        android:orientation="horizontal"
+        android:padding="@dimen/espacio_grid"
+        android:paddingTop="4dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/num_ext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Número exterior"
+            android:layout_weight="0.61" />
+
+        <TextView
+            android:id="@+id/num_int"
+            android:layout_width="124dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Número interior" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+
+        android:orientation="horizontal"
+        android:padding="@dimen/espacio_grid"
+        android:paddingTop="4dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/colonia"
+            android:layout_width="103dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Colonia"
+            android:layout_weight="0.61" />
+
+        <TextView
+            android:id="@+id/localidad"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Localidad" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:padding="@dimen/espacio_grid"
+        android:paddingTop="4dp"
+        android:layout_gravity="top"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/municipio"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Municipio"
+            android:layout_weight="0.61"/>
+
+        <TextView
+            android:id="@+id/estado"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Estado" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:padding="@dimen/espacio_grid"
+        android:paddingTop="4dp"
+        android:layout_gravity="top"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/pais"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:text="País"
+            android:layout_weight="0.61" />
+
+        <TextView
+            android:id="@+id/cp"
+            android:layout_width="143dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Cp" />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

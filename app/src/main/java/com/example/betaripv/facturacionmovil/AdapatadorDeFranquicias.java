@@ -13,6 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.betaripv.facturacionmovil.clases.Franquicia;
+
 import java.util.List;
 
 /**
