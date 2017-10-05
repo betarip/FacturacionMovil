@@ -168,11 +168,7 @@ public class Colores {
 
         //edt.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
         int colorFondo = Color.parseColor(fondo);
-        int resId =0;
-        if(fondo.equals("#212121") )
-            resId = R.color.textDark;
-        else
-            resId = R.color.textLight;
+
         //til.setHintTextAppearance();
         //til.setTextColor(Color.parseColor(textColor(colorFondo)));
         til.setHintTextAppearance(R.color.textLight);
