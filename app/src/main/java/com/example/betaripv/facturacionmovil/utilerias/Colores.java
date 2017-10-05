@@ -166,27 +166,10 @@ public class Colores {
 
     public static void setColoresLayout(TextInputLayout til, Franquicia f, String fondo) {
 
-        //edt.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
-        int colorFondo = Color.parseColor(fondo);
 
-        til.setHintTextAppearance(R.color.textLight);
-        //til.setBackgroundColor(Color.BLUE);
-        //til.setHintTextColor(Color.parseColor(textColor(colorFondo)));
-        //til.setT e
-        /*
-        int[] colors = new int[] {
-                f.getColorSecundarioLight(),
-                Color.RED,
-                f.getColorSecundarioLight(),
-                Color.parseColor(f.getColorSecundario()),
-        };
-        if (Build.VERSION.SDK_INT >= 21) {
-            til.setBackgroundTintList(new ColorStateList(states, colors));
 
-        }else {
-            til.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
-        }
-*/
+
+        til.setHintTextAppearance(R.style.TextAppearence_App_Prueba);
     }
 
 

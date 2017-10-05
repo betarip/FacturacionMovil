@@ -68,20 +68,13 @@ public class ActividadDetalle extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ID_FRANQUICIA, 0));
-        colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_detalle);
         view = (LinearLayout) findViewById(R.id.activityDetalle);
 
 
-        //itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ID_FRANQUICIA, 0));
-        if(colorFondo.equals("#212121") )
-            setTheme(R.style.TextAppearence_App_TextInputLayoutDark);
-        else
-            setTheme(R.style.TextAppearence_App_TextInputLayoutLight);
-
+        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ID_FRANQUICIA, 0));
+        colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
 
 
         view.setBackgroundColor(Color.parseColor(colorFondo));

@@ -16,8 +16,19 @@
 
     <style name="TextAppearence.App.TextInputLayoutLight" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/textLight</item>
+        <item name="colorAccent">@android:color/holo_purple</item>
+
     </style>
+
+    <style name="TextAppearence.App.Prueba" parent="@android:style/TextAppearance">
+        <item name="colorAccent">@android:color/holo_purple</item>
+        <item name="android:textColorHint">@android:color/holo_green_dark</item>
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
     <style name="TextAppearence.App.TextInputLayoutDark" parent="@android:style/TextAppearance">
+        <item name="colorAccent">@android:color/holo_purple</item>
+        <item name="android:textColorHint">@android:color/holo_purple</item>
         <item name="android:textColor">@color/textDark</item>
     </style>
 
