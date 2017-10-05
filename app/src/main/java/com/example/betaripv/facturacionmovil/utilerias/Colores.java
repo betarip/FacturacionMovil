@@ -169,8 +169,6 @@ public class Colores {
         //edt.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
         int colorFondo = Color.parseColor(fondo);
 
-        //til.setHintTextAppearance();
-        //til.setTextColor(Color.parseColor(textColor(colorFondo)));
         til.setHintTextAppearance(R.color.textLight);
         //til.setBackgroundColor(Color.BLUE);
         //til.setHintTextColor(Color.parseColor(textColor(colorFondo)));
