@@ -110,9 +110,7 @@ public class ActividadDetalle extends AppCompatActivity {
         if(numITU.isEmpty() || numITU.length() != 20 ){
             layoutITU.setErrorEnabled(true);
             layoutITU.setError("ITU invalido");
-            itu.setAnimation(anim);
-            itu.startAnimation(anim);
-            //itu.setError("");
+
             return false;
         }else{
             layoutITU.setErrorEnabled(false);

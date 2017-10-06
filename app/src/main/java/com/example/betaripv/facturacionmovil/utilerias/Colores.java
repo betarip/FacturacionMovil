@@ -139,17 +139,7 @@ public class Colores {
                 f.getColorPrincipalLight(),
                 Color.BLUE
         };
-        /*
-        Drawable drawable = edt.getBackground(); // get current EditText drawable
-        //edt.setBackgroundTintList();
-        drawable.setColorFilter(Color.parseColor(f.getColorPrincipal()), PorterDuff.Mode.SRC_ATOP);
-        if(Build.VERSION.SDK_INT > 16) {
-            edt.setBackground(drawable); // set the new drawable to EditText
-            //edt.setB
-        }else{
-            edt.setBackgroundDrawable(drawable); // use setBackgroundDrawable because setBackground required API 16
-        }
-*/
+
         if (Build.VERSION.SDK_INT >= 21) {
             edt.setBackgroundTintList(new ColorStateList(states, colors));
             //edt.setHintTextColor(new ColorStateList(states, colorsP));
@@ -165,29 +155,17 @@ public class Colores {
     }
 
     public static void setColoresLayout(TextInputLayout til, Franquicia f, String fondo) {
+        if (fondo.equals("#212121"))
+            til.setHintTextAppearance(R.style.TextAppearence_App_TextInputLayoutLight);
+        else
+            til.setHintTextAppearance(R.style.TextAppearence_App_TextInputLayoutDark);
 
 
-
-
-        til.setHintTextAppearance(R.style.TextAppearence_App_Prueba);
     }
 
 
     //public static void configurarBoton()
 
 
-    public static void setInputTextLayoutColor(EditText editText, @ColorInt int color) {
-        TextInputLayout til = (TextInputLayout) editText.getParent();
-        try {
-            Field fDefaultTextColor = TextInputLayout.class.getDeclaredField("mDefaultTextColor");
-            fDefaultTextColor.setAccessible(true);
-            fDefaultTextColor.set(til, new ColorStateList(new int[][]{{0}}, new int[]{ color }));
 
-            Field fFocusedTextColor = TextInputLayout.class.getDeclaredField("mFocusedTextColor");
-            fFocusedTextColor.setAccessible(true);
-            fFocusedTextColor.set(til, new ColorStateList(new int[][]{{0}}, new int[]{ color }));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
