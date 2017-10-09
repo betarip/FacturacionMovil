@@ -36,8 +36,6 @@ public class Colores {
         return color;
     }
 
-   
-
     public static int manipuleColor(int color, float factor) {
 
         int a = Color.alpha(color);
@@ -52,7 +50,6 @@ public class Colores {
     }
 
     public static int backManipuleColor(int color, float factor) {
-
         int a = Color.alpha(color);
         int r = Math.round(Color.red(color) * factor);
         int g = Math.round(Color.green(color) * factor);
@@ -122,30 +119,17 @@ public class Colores {
         //edt.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
         int colorFondo = Color.parseColor(fondo);
         edt.setTextColor(Color.parseColor(textColor(colorFondo)));
-        edt.setHintTextColor(Color.GREEN);
         //edt.set
         //edt.setHintTextColor();
 
         int[] colors = new int[] {
                 f.getColorSecundarioLight(),
-                Color.YELLOW,
+                Color.BLUE,
                 f.getColorSecundarioLight(),
                 Color.parseColor(f.getColorSecundario()),
         };
-
-        int[] colorsP = new int[] {
-                f.getColorPrincipalLight(),
-                Color.RED,
-                f.getColorPrincipalLight(),
-                Color.BLUE
-        };
-
         if (Build.VERSION.SDK_INT >= 21) {
             edt.setBackgroundTintList(new ColorStateList(states, colors));
-            //edt.setHintTextColor(new ColorStateList(states, colorsP));
-            //edt.setForegroundTintList(new ColorStateList(states, colors));
-            //edt.setTi
-            //edt.setHintTextColor(new ColorStateList(states, colors));
         }else {
             edt.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
         }
@@ -159,8 +143,6 @@ public class Colores {
             til.setHintTextAppearance(R.style.TextAppearence_App_TextInputLayoutLight);
         else
             til.setHintTextAppearance(R.style.TextAppearence_App_TextInputLayoutDark);
-
-
     }
 
 

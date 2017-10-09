@@ -7,16 +7,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,7 +59,6 @@ public class FacturarCompra extends AppCompatActivity {
     private TextInputLayout rfcClienteLayout;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,14 +72,14 @@ public class FacturarCompra extends AppCompatActivity {
         itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ActividadDetalle.ID_FRANQUICIA, 0));
         compraEncontrada = Compra.getCompraSelect();
         clienteEnc = Cliente.getClienteSelec();
-        if(clienteEnc != null){
+        if (clienteEnc != null) {
             rfcCliente.setText(clienteEnc.getRfc());
             mostrarCliente.setEnabled(true);
             //mostrarDatosCliente();
-        }else{
-            SharedPreferences  pref = getSharedPreferences("SPCliente",Context.MODE_PRIVATE);
-            if(pref.contains("cliente")){
-                String json=  pref.getString("cliente","");
+        } else {
+            SharedPreferences pref = getSharedPreferences("SPCliente", Context.MODE_PRIVATE);
+            if (pref.contains("cliente")) {
+                String json = pref.getString("cliente", "");
                 try {
                     JSONObject jsonResponse = new JSONObject(json.toString());
                     Cliente nuevo = Cliente.JsontToCliente(jsonResponse);
@@ -106,12 +106,12 @@ public class FacturarCompra extends AppCompatActivity {
             w.setStatusBarColor(itemDetallado.getColorPrincipalDark());
         }
 
-        Colores.setColoresBtn(buscarCliente,itemDetallado);
-        Colores.setColoresBtn(mostrarCliente,itemDetallado);
-        Colores.setColoresBtn(mostrarCompra,itemDetallado);
-        Colores.setColoresBtn(facturar,itemDetallado);
+        Colores.setColoresBtn(buscarCliente, itemDetallado);
+        Colores.setColoresBtn(mostrarCliente, itemDetallado);
+        Colores.setColoresBtn(mostrarCompra, itemDetallado);
+        Colores.setColoresBtn(facturar, itemDetallado);
 
-        Colores.setColoresEdit(rfcCliente,itemDetallado,colorFondo);
+        Colores.setColoresEdit(rfcCliente, itemDetallado, colorFondo);
 
         usarToolbar();
 
@@ -127,7 +127,7 @@ public class FacturarCompra extends AppCompatActivity {
 
     }
 
-    public void mostrarDatosCliente(View view){
+    public void mostrarDatosCliente(View view) {
 
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         LayoutInflater inflater = this.getLayoutInflater();
@@ -172,7 +172,6 @@ public class FacturarCompra extends AppCompatActivity {
         textViewCp.setText(clienteEnc.getDomicilio().getCp());
 
 
-
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -184,17 +183,18 @@ public class FacturarCompra extends AppCompatActivity {
     }
 
 
-    public void buscarCliente(View view){
+    public void buscarCliente(View view) {
+        hideSoftKeyboard();
         String rfc = rfcCliente.getText().toString();
-        if(!rfc.equals("") && rfc.length() == 13 ) {
+        if (!rfc.equals("") && rfc.length() == 13) {
             peticion(ServicioWeb.urlBase + ServicioWeb.CLIENTE, rfc);
             rfcClienteLayout.setErrorEnabled(false);
-        }else{
+        } else {
             String mensaje;
-            if(rfc.equals("")){
+            if (rfc.equals("")) {
                 mensaje = "Se debe introducir un rfc";
-            }else{
-                mensaje ="RFC incompleto";
+            } else {
+                mensaje = "RFC incompleto";
             }
 
             rfcClienteLayout.setErrorEnabled(true);
@@ -212,7 +212,6 @@ public class FacturarCompra extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Buscando cliente...");
         pDialog.show();
-
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -228,9 +227,9 @@ public class FacturarCompra extends AppCompatActivity {
                                 Cliente.clienteSelec = nuevo;
                                 clienteEnc = Cliente.getClienteSelec();
                                 //Guardar datos de cliente
-                                SharedPreferences  pref = getSharedPreferences("SPCliente",Context.MODE_PRIVATE);
+                                SharedPreferences pref = getSharedPreferences("SPCliente", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
-                                editor.putString("cliente",jsonCliente.toString());
+                                editor.putString("cliente", jsonCliente.toString());
                                 editor.commit();
 
                                 //habilitar boton cliente y facturacion
@@ -276,12 +275,12 @@ public class FacturarCompra extends AppCompatActivity {
         builder.setMessage(mensaje);
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent ;
+                Intent intent;
 
-                intent = new Intent(context,RegistrarCliente.class);
+                intent = new Intent(context, RegistrarCliente.class);
                 intent.putExtra(FacturarCompra.ID_COMPRA, compraEncontrada.getID());
                 intent.putExtra(ActividadDetalle.ID_FRANQUICIA, itemDetallado.getId());
-
+                intent.putExtra("clienteRegistrar", rfcCliente.getText().toString());
                 startActivity(intent);
             }
         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -319,6 +318,13 @@ public class FacturarCompra extends AppCompatActivity {
                 });
         alertDialog.show();
 
+    }
+
+    public void hideSoftKeyboard() {
+        if (getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
 
 
