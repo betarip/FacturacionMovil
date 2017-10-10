@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.betaripv.facturacionmovil.clases.Franquicia;
+import com.example.betaripv.facturacionmovil.utilerias.Extras;
 
 public class actividad_principal extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -62,14 +63,14 @@ public class actividad_principal extends AppCompatActivity implements AdapterVie
         Franquicia item = (Franquicia) parent.getItemAtPosition(position);
 
         Intent intent = new Intent(this, ActividadDetalle.class);
-        intent.putExtra(ActividadDetalle.ID_FRANQUICIA, item.getId());
+        intent.putExtra(Extras.ID_FRANQUICIA, item.getId());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat activityOptions =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
                             this,
                             new Pair<View, String>(view.findViewById(R.id.imagen_franquicia),
-                                    ActividadDetalle.VIEW_NAME_HEADER_IMAGE)
+                                    Extras.VIEW_NAME_HEADER_IMAGE)
                     );
             ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
 

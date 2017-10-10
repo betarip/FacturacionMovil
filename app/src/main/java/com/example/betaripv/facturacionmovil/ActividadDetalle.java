@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.betaripv.facturacionmovil.clases.Compra;
 import com.example.betaripv.facturacionmovil.clases.Franquicia;
 import com.example.betaripv.facturacionmovil.utilerias.Colores;
+import com.example.betaripv.facturacionmovil.utilerias.Extras;
 import com.example.betaripv.facturacionmovil.utilerias.ServicioWeb;
 
 import org.json.JSONException;
@@ -45,8 +47,7 @@ import java.util.Map;
 
 public class ActividadDetalle extends AppCompatActivity {
     public static final String TAG = ActividadDetalle.class.getSimpleName();
-    public static final String ID_FRANQUICIA = "com.example.betaripv.facturacionmovil.extra.ID";
-    public static final String VIEW_NAME_HEADER_IMAGE = "imagen_compartida";
+
 
     ProgressDialog pDialog;
 
@@ -73,7 +74,7 @@ public class ActividadDetalle extends AppCompatActivity {
         view = (LinearLayout) findViewById(R.id.activityDetalle);
 
 
-        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ID_FRANQUICIA, 0));
+        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(Extras.ID_FRANQUICIA, 0));
         colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
 
 
@@ -174,6 +175,7 @@ public class ActividadDetalle extends AppCompatActivity {
         String numeroITU = itu.getText().toString();
         if(revisarITU()){
             peticion(ServicioWeb.urlBase + ServicioWeb.COMPRA, numeroITU);
+            hideSoftKeyboard();
         }
         /*
 
@@ -218,8 +220,8 @@ public class ActividadDetalle extends AppCompatActivity {
                                     c.setSubtotal(compra.getString("subtotal"));
                                     c.setTotal(compra.getString("total"));
                                     Compra.setCompraSelect(c);
-                                    intent.putExtra(FacturarCompra.ID_COMPRA, idCompra);
-                                    intent.putExtra(ActividadDetalle.ID_FRANQUICIA, itemDetallado.getId());
+                                intent.putExtra(Extras.ID_COMPRA, idCompra);
+                                intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
                                     startActivity(intent);
                                 /*
                                 } else {
@@ -271,6 +273,13 @@ public class ActividadDetalle extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
 
+    }
+
+    public void hideSoftKeyboard() {
+        if (getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
 
 

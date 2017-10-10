@@ -32,6 +32,7 @@ import com.example.betaripv.facturacionmovil.clases.Cliente;
 import com.example.betaripv.facturacionmovil.clases.Compra;
 import com.example.betaripv.facturacionmovil.clases.Franquicia;
 import com.example.betaripv.facturacionmovil.utilerias.Colores;
+import com.example.betaripv.facturacionmovil.utilerias.Extras;
 import com.example.betaripv.facturacionmovil.utilerias.ServicioWeb;
 
 import org.json.JSONException;
@@ -42,8 +43,6 @@ import java.util.Map;
 
 public class FacturarCompra extends AppCompatActivity {
     public static final String TAG = FacturarCompra.class.getSimpleName();
-    public static final String ID_COMPRA = "com.example.betaripv.facturacionmovil.compra.ID";
-    public static final String VIEW_NAME_HEADER_IMAGE = "imagen_compartida";
 
     ProgressDialog pDialog;
 
@@ -69,12 +68,13 @@ public class FacturarCompra extends AppCompatActivity {
         facturar = (Button) findViewById(R.id.btnDeFac);
         rfcCliente = (EditText) findViewById(R.id.txtInCliente);
         rfcClienteLayout = (TextInputLayout) findViewById(R.id.layout_txtInCliente);
-        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ActividadDetalle.ID_FRANQUICIA, 0));
+        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(Extras.ID_FRANQUICIA, 0));
         compraEncontrada = Compra.getCompraSelect();
         clienteEnc = Cliente.getClienteSelec();
         if (clienteEnc != null) {
             rfcCliente.setText(clienteEnc.getRfc());
             mostrarCliente.setEnabled(true);
+            //actualizarDatosDialog();
             //mostrarDatosCliente();
         } else {
             SharedPreferences pref = getSharedPreferences("SPCliente", Context.MODE_PRIVATE);
@@ -88,6 +88,7 @@ public class FacturarCompra extends AppCompatActivity {
                     rfcCliente.setText(clienteEnc.getRfc());
                     mostrarCliente.setEnabled(true);
                     facturar.setEnabled(true);
+                    //actualizarDatosDialog();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -129,6 +130,12 @@ public class FacturarCompra extends AppCompatActivity {
 
     public void mostrarDatosCliente(View view) {
 
+        actualizarDatosDialog();
+
+
+    }
+
+    public void actualizarDatosDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_detalles_cliente, null);
@@ -179,7 +186,6 @@ public class FacturarCompra extends AppCompatActivity {
                     }
                 });
         alertDialog.show();
-
     }
 
 
@@ -278,8 +284,8 @@ public class FacturarCompra extends AppCompatActivity {
                 Intent intent;
 
                 intent = new Intent(context, RegistrarCliente.class);
-                intent.putExtra(FacturarCompra.ID_COMPRA, compraEncontrada.getID());
-                intent.putExtra(ActividadDetalle.ID_FRANQUICIA, itemDetallado.getId());
+                intent.putExtra(Extras.ID_COMPRA, compraEncontrada.getID());
+                intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
                 intent.putExtra("clienteRegistrar", rfcCliente.getText().toString());
                 startActivity(intent);
             }

@@ -28,9 +28,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.betaripv.facturacionmovil.clases.Cliente;
+import com.example.betaripv.facturacionmovil.clases.*;
 import com.example.betaripv.facturacionmovil.clases.Franquicia;
 import com.example.betaripv.facturacionmovil.utilerias.Colores;
+import com.example.betaripv.facturacionmovil.utilerias.Extras;
 import com.example.betaripv.facturacionmovil.utilerias.ServicioWeb;
 
 import org.json.JSONObject;
@@ -45,6 +46,7 @@ public class RegistrarCliente extends AppCompatActivity {
     public static final String TAG = FacturarCompra.class.getSimpleName();
     ProgressDialog pDialog;
     private Cliente clienteEnc;
+    private Compra compraEncontrada;
 
     final Context context = this;
 
@@ -67,7 +69,8 @@ public class RegistrarCliente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrar_cliente);
 
-        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(ActividadDetalle.ID_FRANQUICIA, 0));
+        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(Extras.ID_FRANQUICIA, 0));
+        compraEncontrada = Compra.getCompraSelect();
 
 
         etRfcCliente = (EditText) findViewById(R.id.textRFC);
@@ -142,6 +145,14 @@ public class RegistrarCliente extends AppCompatActivity {
 
         Colores.setColoresBtn(btnRegistar, itemDetallado);
         usarToolbar();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();  // Always call the superclass method first
+        Log.d(TAG, "Regresar del metodo de registro");
 
 
     }
@@ -476,4 +487,14 @@ public class RegistrarCliente extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(context, FacturarCompra.class);
+        intent.putExtra(Extras.ID_COMPRA, compraEncontrada.getID());
+        intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
+        startActivity(intent);
+    }
 }
