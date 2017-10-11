@@ -70,6 +70,31 @@ public class FacturarCompra extends AppCompatActivity {
         rfcClienteLayout = (TextInputLayout) findViewById(R.id.layout_txtInCliente);
         itemDetallado = Franquicia.getItem(getIntent().getIntExtra(Extras.ID_FRANQUICIA, 0));
         compraEncontrada = Compra.getCompraSelect();
+        colocarDatosClientes();
+        view = findViewById(R.id.principal);
+        //SET Colors
+        colorTexto = Colores.textColor(Color.parseColor(itemDetallado.getColorPrincipal()));
+        colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
+        view.setBackgroundColor(Color.parseColor(colorFondo));
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window w = this.getWindow();
+            w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            w.setStatusBarColor(itemDetallado.getColorPrincipalDark());
+        }
+
+        Colores.setColoresBtn(buscarCliente, itemDetallado);
+        Colores.setColoresBtn(mostrarCliente, itemDetallado);
+        Colores.setColoresBtn(mostrarCompra, itemDetallado);
+        Colores.setColoresBtn(facturar, itemDetallado);
+
+        Colores.setColoresEdit(rfcCliente, itemDetallado, colorFondo);
+
+        usarToolbar();
+
+    }
+
+    private void colocarDatosClientes() {
         clienteEnc = Cliente.getClienteSelec();
         if (clienteEnc != null) {
             rfcCliente.setText(clienteEnc.getRfc());
@@ -94,28 +119,6 @@ public class FacturarCompra extends AppCompatActivity {
                 }
             }
         }
-        compraEncontrada = Compra.getCompraSelect();
-        view = findViewById(R.id.principal);
-        //SET Colors
-        colorTexto = Colores.textColor(Color.parseColor(itemDetallado.getColorPrincipal()));
-        colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
-        view.setBackgroundColor(Color.parseColor(colorFondo));
-        if (Build.VERSION.SDK_INT >= 21) {
-            Window w = this.getWindow();
-            w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            w.setStatusBarColor(itemDetallado.getColorPrincipalDark());
-        }
-
-        Colores.setColoresBtn(buscarCliente, itemDetallado);
-        Colores.setColoresBtn(mostrarCliente, itemDetallado);
-        Colores.setColoresBtn(mostrarCompra, itemDetallado);
-        Colores.setColoresBtn(facturar, itemDetallado);
-
-        Colores.setColoresEdit(rfcCliente, itemDetallado, colorFondo);
-
-        usarToolbar();
-
     }
 
     private void usarToolbar() {
@@ -129,13 +132,7 @@ public class FacturarCompra extends AppCompatActivity {
     }
 
     public void mostrarDatosCliente(View view) {
-
-        actualizarDatosDialog();
-
-
-    }
-
-    public void actualizarDatosDialog() {
+        colocarDatosClientes();
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_detalles_cliente, null);
@@ -186,7 +183,11 @@ public class FacturarCompra extends AppCompatActivity {
                     }
                 });
         alertDialog.show();
+
+
     }
+
+
 
 
     public void buscarCliente(View view) {

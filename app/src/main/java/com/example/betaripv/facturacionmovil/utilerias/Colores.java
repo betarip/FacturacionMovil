@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.betaripv.facturacionmovil.R;
-import com.example.betaripv.facturacionmovil.clases.Franquicia;
+import com.example.betaripv.facturacionmovil.clases.*;
 
 import java.lang.reflect.Field;
 

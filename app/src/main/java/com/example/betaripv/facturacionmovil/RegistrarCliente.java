@@ -28,8 +28,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.betaripv.facturacionmovil.clases.*;
 import com.example.betaripv.facturacionmovil.clases.Franquicia;
+import com.example.betaripv.facturacionmovil.clases.Compra;
+import com.example.betaripv.facturacionmovil.clases.Cliente;
 import com.example.betaripv.facturacionmovil.utilerias.Colores;
 import com.example.betaripv.facturacionmovil.utilerias.Extras;
 import com.example.betaripv.facturacionmovil.utilerias.ServicioWeb;
@@ -492,6 +493,7 @@ public class RegistrarCliente extends AppCompatActivity {
     public void onBackPressed() {
 
         finish();
+
         Intent intent = new Intent(context, FacturarCompra.class);
         intent.putExtra(Extras.ID_COMPRA, compraEncontrada.getID());
         intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
