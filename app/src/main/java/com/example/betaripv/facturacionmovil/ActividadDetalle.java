@@ -45,7 +45,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActividadDetalle extends AppCompatActivity {
+public class ActividadDetalle extends ActividadBase {
     public static final String TAG = ActividadDetalle.class.getSimpleName();
 
 

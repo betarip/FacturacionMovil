@@ -18,7 +18,7 @@ import android.widget.GridView;
 import com.example.betaripv.facturacionmovil.clases.Franquicia;
 import com.example.betaripv.facturacionmovil.utilerias.Extras;
 
-public class actividad_principal extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class actividad_principal extends ActividadBase implements AdapterView.OnItemClickListener {
 
     private GridView gridView;
     private AdapatadorDeFranquicias adaptador;
@@ -40,22 +40,9 @@ public class actividad_principal extends AppCompatActivity implements AdapterVie
         setSupportActionBar(toolbar);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if (id == R.id.action_setting) {
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
-    }
 
 
     @Override
@@ -79,16 +66,5 @@ public class actividad_principal extends AppCompatActivity implements AdapterVie
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Intent home = new Intent(Intent.ACTION_MAIN);
-            home.addCategory(Intent.CATEGORY_HOME);
-            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(home);
-            return true;
 
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

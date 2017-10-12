@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,7 +42,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FacturarCompra extends AppCompatActivity {
+public class FacturarCompra extends ActividadBase {
     public static final String TAG = FacturarCompra.class.getSimpleName();
 
     ProgressDialog pDialog;
@@ -242,6 +243,11 @@ public class FacturarCompra extends AppCompatActivity {
                                 //habilitar boton cliente y facturacion
                                 mostrarCliente.setEnabled(true);
                                 facturar.setEnabled(true);
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "Cliente " + nuevo.getRfc() + " encontrado",
+                                        Toast.LENGTH_SHORT);
+                                //toast.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
+                                toast.show();
                                 //Log.d(TAG, "" + response.toString());
                             } else {
                                 cargarDialog("No existe Cliente ¿Desea Registrarlo?");

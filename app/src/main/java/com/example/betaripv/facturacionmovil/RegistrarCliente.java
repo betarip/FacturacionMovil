@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -42,7 +44,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegistrarCliente extends AppCompatActivity {
+public class RegistrarCliente extends ActividadBase {
 
     public static final String TAG = FacturarCompra.class.getSimpleName();
     ProgressDialog pDialog;
@@ -70,12 +72,17 @@ public class RegistrarCliente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrar_cliente);
 
-        itemDetallado = Franquicia.getItem(getIntent().getIntExtra(Extras.ID_FRANQUICIA, 0));
-        compraEncontrada = Compra.getCompraSelect();
+        //itemDetallado = Franquicia.getItem(getIntent().getIntExtra(Extras.ID_FRANQUICIA, 0));
+        //compraEncontrada = Compra.getCompraSelect();
 
 
         etRfcCliente = (EditText) findViewById(R.id.textRFC);
-        etRfcCliente.setText(getIntent().getStringExtra("clienteRegistrar"));
+        String clienteString = getIntent().getStringExtra("clienteRegistrar");
+
+
+        etRfcCliente.setText(clienteString);
+        if (clienteString == null)
+            etRfcCliente.setEnabled(true);
         tilRfcCliente = (TextInputLayout) findViewById(R.id.layout_textRFC);
 
         etNombreRazon = (EditText) findViewById(R.id.textNombre);
@@ -119,7 +126,7 @@ public class RegistrarCliente extends AppCompatActivity {
         view = findViewById(R.id.principal);
 
         debug();
-
+        /*
         colorTexto = Colores.textColor(Color.parseColor(itemDetallado.getColorPrincipal()));
         colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
         view.setBackgroundColor(Color.parseColor(colorFondo));
@@ -145,6 +152,7 @@ public class RegistrarCliente extends AppCompatActivity {
         Colores.setColoresEdit(etCp, itemDetallado, colorFondo);
 
         Colores.setColoresBtn(btnRegistar, itemDetallado);
+        */
         usarToolbar();
 
 
@@ -351,9 +359,13 @@ public class RegistrarCliente extends AppCompatActivity {
 
 
     private void usarToolbar() {
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.parseColor(itemDetallado.getColorPrincipal()));
         toolbar.setTitleTextColor(Color.parseColor(colorTexto));
+        setSupportActionBar(toolbar);
+        */
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Registrar Cliente");
     }
@@ -369,7 +381,7 @@ public class RegistrarCliente extends AppCompatActivity {
             //error
             Toast toast = Toast.makeText(getApplicationContext(), "Faltaron algunos campos.",
                     Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
+            //toast.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
             toast.show();
         }
 
@@ -403,7 +415,10 @@ public class RegistrarCliente extends AppCompatActivity {
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("cliente", jsonCliente.toString());
                                 editor.commit();
-
+                                Toast toast = Toast.makeText(getApplicationContext(), "Cliente " + nuevo.getRfc() + " registrado",
+                                        Toast.LENGTH_SHORT);
+                                //toast.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
+                                toast.show();
                                 //regresar a la pagina
                                 onBackPressed();
                                 //Log.d(TAG, "" + response.toString());
@@ -489,6 +504,18 @@ public class RegistrarCliente extends AppCompatActivity {
     }
 
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        return super.onOptionsItemSelected(item);
+    }
+/*
     @Override
     public void onBackPressed() {
 
@@ -499,4 +526,7 @@ public class RegistrarCliente extends AppCompatActivity {
         intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
         startActivity(intent);
     }
+
+
+    */
 }
