@@ -1,5 +1,6 @@
 package com.example.betaripv.facturacionmovil.clases;
 
+
 /**
  * Created by ivan on 04/09/2017.
  */
@@ -26,7 +27,7 @@ public class Compra {
     }
 
     public static void setCompraSelect(Compra compraSelect){
-       Compra.compraSelect = compraSelect;
+        Compra.compraSelect = compraSelect;
     }
 
     public String getIdCompra() {

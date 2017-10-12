@@ -62,6 +62,7 @@ public class ActividadBase extends AppCompatActivity {
             mostrarMensaje("Se eliminaron los datos del cliente en el telefono");
             editor.clear();
             editor.commit();
+            Cliente.cleanClienteSelec();
             return true;
         }
         if (id == R.id.registrar) {

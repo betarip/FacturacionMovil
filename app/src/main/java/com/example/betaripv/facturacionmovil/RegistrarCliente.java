@@ -72,9 +72,6 @@ public class RegistrarCliente extends ActividadBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrar_cliente);
 
-        //itemDetallado = Franquicia.getItem(getIntent().getIntExtra(Extras.ID_FRANQUICIA, 0));
-        //compraEncontrada = Compra.getCompraSelect();
-
 
         etRfcCliente = (EditText) findViewById(R.id.textRFC);
         String clienteString = getIntent().getStringExtra("clienteRegistrar");

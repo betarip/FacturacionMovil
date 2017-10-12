@@ -71,6 +71,10 @@ public class Cliente {
         return clienteSelec;
     }
 
+    public static void cleanClienteSelec() {
+        clienteSelec = null;
+    }
+
     public static boolean isSelected(){
         return clienteSelec != null;
     }
