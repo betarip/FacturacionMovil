@@ -64,7 +64,7 @@ public class FacturarCompra extends ActividadBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.facturar_compra);
         buscarCliente = (Button) findViewById(R.id.btnBusCliente);
-        mostrarCliente = (Button) findViewById(R.id.btnDeCli);
+
         mostrarCompra = (Button) findViewById(R.id.btnDeCom);
         facturar = (Button) findViewById(R.id.btnDeFac);
         rfcCliente = (EditText) findViewById(R.id.txtInCliente);
@@ -85,7 +85,6 @@ public class FacturarCompra extends ActividadBase {
         }
 
         Colores.setColoresBtn(buscarCliente, itemDetallado);
-        Colores.setColoresBtn(mostrarCliente, itemDetallado);
         Colores.setColoresBtn(mostrarCompra, itemDetallado);
         Colores.setColoresBtn(facturar, itemDetallado);
 
@@ -95,11 +94,20 @@ public class FacturarCompra extends ActividadBase {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();  // Always call the superclass method first
+        Log.d(TAG, "Regresar del metodo de registro");
+        colocarDatosClientes();
+
+    }
+
     private void colocarDatosClientes() {
         clienteEnc = Cliente.getClienteSelec();
         if (clienteEnc != null) {
             rfcCliente.setText(clienteEnc.getRfc());
-            mostrarCliente.setEnabled(true);
+
+            facturar.setEnabled(true);
             //actualizarDatosDialog();
             //mostrarDatosCliente();
         } else {
@@ -112,7 +120,7 @@ public class FacturarCompra extends ActividadBase {
                     Cliente.clienteSelec = nuevo;
                     clienteEnc = Cliente.getClienteSelec();
                     rfcCliente.setText(clienteEnc.getRfc());
-                    mostrarCliente.setEnabled(true);
+
                     facturar.setEnabled(true);
                     //actualizarDatosDialog();
                 } catch (JSONException e) {
@@ -188,14 +196,11 @@ public class FacturarCompra extends ActividadBase {
 
     }
 
-
-
-
     public void buscarCliente(View view) {
         hideSoftKeyboard();
         String rfc = rfcCliente.getText().toString();
         if (!rfc.equals("") && rfc.length() == 13) {
-            peticion(ServicioWeb.urlBase + ServicioWeb.CLIENTE, rfc);
+            peticionCliente(ServicioWeb.urlBase + ServicioWeb.CLIENTE, rfc);
             rfcClienteLayout.setErrorEnabled(false);
         } else {
             String mensaje;
@@ -204,16 +209,13 @@ public class FacturarCompra extends ActividadBase {
             } else {
                 mensaje = "RFC incompleto";
             }
-
             rfcClienteLayout.setErrorEnabled(true);
             rfcClienteLayout.setError(mensaje);
-
         }
 
     }
 
-
-    private void peticion(String url, final String... par) {
+    private void peticionCliente(String url, final String... par) {
         Log.d(TAG, "*******************    url     *****************************");
         Log.d(TAG, url);
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -241,16 +243,17 @@ public class FacturarCompra extends ActividadBase {
                                 editor.commit();
 
                                 //habilitar boton cliente y facturacion
-                                mostrarCliente.setEnabled(true);
+
                                 facturar.setEnabled(true);
 
                                 Toast toast = Toast.makeText(getApplicationContext(), "Cliente " + nuevo.getRfc() + " encontrado",
                                         Toast.LENGTH_SHORT);
+                                colocarDatosClientes();
                                 //toast.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
                                 toast.show();
                                 //Log.d(TAG, "" + response.toString());
                             } else {
-                                cargarDialog("No existe Cliente ¿Desea Registrarlo?");
+                                cargarDialog("No existe Cliente ¿Desea Registrarlo?",1);
                                 Log.d(TAG, "*******************    Error     *****************************");
                                 Log.d(TAG, "" + jsonResponse.getString("error"));
                             }
@@ -282,26 +285,89 @@ public class FacturarCompra extends ActividadBase {
         queue.add(postRequest);
     }
 
+    private void peticionFacturar(String url, final String... par) {
+        Log.d(TAG, "*******************    url     *****************************");
+        Log.d(TAG, url);
+        RequestQueue queue = Volley.newRequestQueue(context);
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Facturando...");
+        pDialog.show();
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            Log.d(TAG, "*******************    Response     *****************************");
+                            Log.d(TAG, response.toString());
+                            JSONObject jsonResponse = new JSONObject(response.toString());
+                            if (jsonResponse.getInt("exito") == 1) {
 
-    private void cargarDialog(String mensaje) {
+                            } else {
+                                cargarDialog("Error , ¿Desea re-intentar?",2);
+                                Log.d(TAG, "*******************    Error     *****************************");
+                                Log.d(TAG, "" + jsonResponse.getString("error"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        pDialog.hide();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        pDialog.hide();
+
+
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                // the POST parameters:
+                params.put("ITU", par[0]);
+                params.put("cliente", par[1]);
+                return params;
+            }
+        };
+
+        queue.add(postRequest);
+    }
+
+    private void cargarDialog(String mensaje, int opcion) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(mensaje);
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent;
+        if(opcion == 1) {
+            builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent;
 
-                intent = new Intent(context, RegistrarCliente.class);
-                intent.putExtra(Extras.ID_COMPRA, compraEncontrada.getID());
-                intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
-                intent.putExtra("clienteRegistrar", rfcCliente.getText().toString());
-                startActivity(intent);
-            }
-        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
+                    intent = new Intent(context, RegistrarCliente.class);
+                    intent.putExtra(Extras.ID_COMPRA, compraEncontrada.getID());
+                    intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
+                    intent.putExtra("clienteRegistrar", rfcCliente.getText().toString());
+                    startActivity(intent);
+                }
+            }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    String itu = Compra.getCompraSelect().getITU();
+                    String idCliente = Cliente.getClienteSelec().getIdCliente();
+                    peticionFacturar(ServicioWeb.urlBase + ServicioWeb.FACTURAR, itu,idCliente);
+                }
+            });
+        }else{
+            builder.setPositiveButton("Re - intentar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
+                }
+            }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
 
+                }
+            });
+        }
         AlertDialog alert = builder.create();
         alert.show();
 
@@ -333,12 +399,15 @@ public class FacturarCompra extends ActividadBase {
 
     }
 
-    public void hideSoftKeyboard() {
-        if (getCurrentFocus() != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
+    public void facturarCompra(View view) {
+        String itu = Compra.getCompraSelect().getITU();
+        String idCliente = Cliente.getClienteSelec().getIdCliente();
+        peticionFacturar(ServicioWeb.urlBase + ServicioWeb.FACTURAR, itu,idCliente);
+
     }
+
+
+
 
 
 }

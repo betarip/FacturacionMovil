@@ -7,6 +7,7 @@ package com.example.betaripv.facturacionmovil.clases;
 
 public class Compra {
     private String idCompra;
+    private String ITU;
     private String total;
     private String subtotal;
 
@@ -25,6 +26,10 @@ public class Compra {
         return compraSelect;
 
     }
+
+    public String getITU() { return ITU;    }
+
+    public void setITU(String ITU) { this.ITU = ITU; }
 
     public static void setCompraSelect(Compra compraSelect){
         Compra.compraSelect = compraSelect;
@@ -53,6 +58,7 @@ public class Compra {
     public void setTotal(String total) {
         this.total = total;
     }
+
 
 
 }

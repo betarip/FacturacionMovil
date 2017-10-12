@@ -59,13 +59,6 @@
         android:padding="@dimen/espacio_grid"
         android:paddingTop="16dp"
         android:layout_gravity="top">
-        <Button
-            android:id="@+id/btnDeCli"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Detalle del cliente"
-            android:onClick="mostrarDatosCliente"
-            android:enabled="false" />
 
 
         <Button
@@ -81,7 +74,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Facturar"
-            android:enabled="false" />
+            android:enabled="false"
+
+            android:onClick="facturarCompra"
+            />
 
 
     </LinearLayout>

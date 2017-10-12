@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
 
 public class RegistrarCliente extends ActividadBase {
 
-    public static final String TAG = FacturarCompra.class.getSimpleName();
+    public static final String TAG = RegistrarCliente.class.getSimpleName();
     ProgressDialog pDialog;
     private Cliente clienteEnc;
     private Compra compraEncontrada;
@@ -158,10 +158,12 @@ public class RegistrarCliente extends ActividadBase {
     @Override
     protected void onResume() {
         super.onResume();  // Always call the superclass method first
-        Log.d(TAG, "Regresar del metodo de registro");
+        //Log.d(TAG, "Regresar del metodo de registro");
 
 
     }
+
+
 
     public void debug() {
         etNombreRazon.setText("Razon Social");

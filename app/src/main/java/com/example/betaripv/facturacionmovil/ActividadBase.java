@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,12 +58,18 @@ public class ActividadBase extends AppCompatActivity {
         }
 
         if (id == R.id.eliminar) {
-            SharedPreferences pref = getSharedPreferences("SPCliente", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            mostrarMensaje("Se eliminaron los datos del cliente en el telefono");
-            editor.clear();
-            editor.commit();
-            Cliente.cleanClienteSelec();
+            if(Cliente.isSelected()) {
+                SharedPreferences pref = getSharedPreferences("SPCliente", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                mostrarMensaje("Se eliminaron los datos del cliente en el telefono");
+                editor.clear();
+                editor.commit();
+                Cliente.cleanClienteSelec();
+                onBackPressed();
+            }else{
+                mostrarMensaje("No existe informacion del cliente en el telefono");
+            }
+
             return true;
         }
         if (id == R.id.registrar) {
@@ -138,5 +145,12 @@ public class ActividadBase extends AppCompatActivity {
         alertDialog.show();
 
 
+    }
+
+    public void hideSoftKeyboard() {
+        if (getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
 }

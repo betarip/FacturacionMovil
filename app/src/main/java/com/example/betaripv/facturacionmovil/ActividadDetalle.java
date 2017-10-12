@@ -217,6 +217,7 @@ public class ActividadDetalle extends ActividadBase {
                                 //if (idFranquicia.equals(itemDetallado.getIdFranquicia())) {
                                     intent = new Intent(context, FacturarCompra.class);
                                     Compra c = new Compra(idCompra);
+                                    c.setITU(par[0]);
                                     c.setSubtotal(compra.getString("subtotal"));
                                     c.setTotal(compra.getString("total"));
                                     Compra.setCompraSelect(c);

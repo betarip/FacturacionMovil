@@ -1,5 +1,6 @@
 package com.example.betaripv.facturacionmovil.utilerias;
 
+import android.os.Environment;
 import android.util.Base64;
 
 import java.io.File;
@@ -13,8 +14,8 @@ import java.io.IOException;
 
 public class Archivos {
 
-    public static FileOutputStream base64ToPdf(String baseString, String fileName) {
-        final File dwldsPath = new File(DOWNLOADS_FOLDER + fileName + ".pdf");
+    public static void base64ToPdf(String baseString, String fileName) {
+        final File dwldsPath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName + ".pdf");
         byte[] pdfAsBytes = Base64.decode(baseString, 0);
         FileOutputStream os = null;
         try {
@@ -27,8 +28,5 @@ public class Archivos {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return os;
-
-
     }
 }
