@@ -223,7 +223,7 @@ public class ActividadDetalle extends ActividadBase {
                                     Compra.setCompraSelect(c);
                                 intent.putExtra(Extras.ID_COMPRA, idCompra);
                                 intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
-                                    startActivity(intent);
+                                startActivity(intent);
                                 /*
                                 } else {
                                     Log.d(TAG, "" + idFranquicia + "//" + itemDetallado.getIdFranquicia());

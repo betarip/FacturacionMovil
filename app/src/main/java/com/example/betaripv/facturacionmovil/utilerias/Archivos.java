@@ -15,7 +15,8 @@ import java.io.IOException;
 public class Archivos {
 
     public static void base64ToPdf(String baseString, String fileName) {
-        final File dwldsPath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName + ".pdf");
+
+        final File dwldsPath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + fileName + ".pdf");
         byte[] pdfAsBytes = Base64.decode(baseString, 0);
         FileOutputStream os = null;
         try {

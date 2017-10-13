@@ -31,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.betaripv.facturacionmovil.clases.Cliente;
 import com.example.betaripv.facturacionmovil.clases.Compra;
+import com.example.betaripv.facturacionmovil.clases.Factura;
 import com.example.betaripv.facturacionmovil.clases.Franquicia;
 import com.example.betaripv.facturacionmovil.utilerias.Colores;
 import com.example.betaripv.facturacionmovil.utilerias.Extras;
@@ -301,6 +302,17 @@ public class FacturarCompra extends ActividadBase {
                             Log.d(TAG, response.toString());
                             JSONObject jsonResponse = new JSONObject(response.toString());
                             if (jsonResponse.getInt("exito") == 1) {
+                                Factura f = new Factura();
+                                f.setPdf(jsonResponse.getString("pdf"));
+                                f.setXml(jsonResponse.getString("timbre"));
+                                Factura.setFacturaSelect(f);
+                                Intent intent;
+                                intent = new Intent(context, VistaFactura.class);
+                                intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
+                                startActivity(intent);
+
+
+
 
                             } else {
                                 cargarDialog("Error , ¿Desea re-intentar?",2);
@@ -352,14 +364,15 @@ public class FacturarCompra extends ActividadBase {
                 }
             }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    String itu = Compra.getCompraSelect().getITU();
-                    String idCliente = Cliente.getClienteSelec().getIdCliente();
-                    peticionFacturar(ServicioWeb.urlBase + ServicioWeb.FACTURAR, itu,idCliente);
+
                 }
             });
         }else{
             builder.setPositiveButton("Re - intentar", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
+                    String itu = Compra.getCompraSelect().getITU();
+                    String idCliente = Cliente.getClienteSelec().getIdCliente();
+                    peticionFacturar(ServicioWeb.urlBase + ServicioWeb.FACTURAR_JSON, itu, idCliente);
 
                 }
             }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -402,7 +415,7 @@ public class FacturarCompra extends ActividadBase {
     public void facturarCompra(View view) {
         String itu = Compra.getCompraSelect().getITU();
         String idCliente = Cliente.getClienteSelec().getIdCliente();
-        peticionFacturar(ServicioWeb.urlBase + ServicioWeb.FACTURAR, itu,idCliente);
+        peticionFacturar(ServicioWeb.urlBase + ServicioWeb.FACTURAR_JSON, itu, idCliente);
 
     }
 
