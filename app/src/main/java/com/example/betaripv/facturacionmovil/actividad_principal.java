@@ -66,5 +66,18 @@ public class actividad_principal extends ActividadBase implements AdapterView.On
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.addCategory(Intent.CATEGORY_HOME);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(home);
+            return true;
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 
 }
