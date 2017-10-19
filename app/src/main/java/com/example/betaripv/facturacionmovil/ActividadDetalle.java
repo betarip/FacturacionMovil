@@ -90,10 +90,6 @@ public class ActividadDetalle extends ActividadBase {
         Colores.setColoresBtn(btnBuscar, itemDetallado);
         Colores.setColoresBtn(btnDetalles, itemDetallado);
         Colores.setColoresEdit(itu,itemDetallado,colorFondo);
-        //SET colores de la franquicia
-        //layoutITU.setHintTextAppearance(Color.parseColor(colorTexto));
-
-
         usarToolbar();
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -177,20 +173,7 @@ public class ActividadDetalle extends ActividadBase {
             peticion(ServicioWeb.urlBase + ServicioWeb.COMPRA, numeroITU);
             hideSoftKeyboard();
         }
-        /*
 
-        if(!numeroITU.equals("") && numeroITU.length() == 20) {
-            peticion(ServicioWeb.urlBase + ServicioWeb.COMPRA, numeroITU);
-        }else{
-            String mensaje;
-            if(numeroITU.equals("")){
-                mensaje = "Se debe introducir un ITU";
-            }else{
-                mensaje ="Numero de ITU incompleto";
-            }
-            Toast.makeText(this,mensaje, Toast.LENGTH_LONG);
-        }
-        */
     }
 
     private void peticion(String url, final String... par) {

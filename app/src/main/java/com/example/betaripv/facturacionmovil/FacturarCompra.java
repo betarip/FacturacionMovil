@@ -53,7 +53,7 @@ public class FacturarCompra extends ActividadBase {
     private Cliente clienteEnc;
     private Compra compraEncontrada;
     private View view;
-    private Button buscarCliente, mostrarCliente, mostrarCompra, facturar;
+    private Button buscarCliente, mostrarCompra, facturar;
     private EditText rfcCliente;
     private String colorTexto;
     private String colorFondo;
@@ -121,7 +121,6 @@ public class FacturarCompra extends ActividadBase {
                     Cliente.clienteSelec = nuevo;
                     clienteEnc = Cliente.getClienteSelec();
                     rfcCliente.setText(clienteEnc.getRfc());
-
                     facturar.setEnabled(true);
                     //actualizarDatosDialog();
                 } catch (JSONException e) {
@@ -234,7 +233,6 @@ public class FacturarCompra extends ActividadBase {
                             if (jsonResponse.getInt("exito") == 1) {
                                 JSONObject jsonCliente = jsonResponse.getJSONObject("datos");
                                 Cliente nuevo = Cliente.JsontToCliente(jsonCliente);
-
                                 Cliente.clienteSelec = nuevo;
                                 clienteEnc = Cliente.getClienteSelec();
                                 //Guardar datos de cliente
@@ -242,11 +240,8 @@ public class FacturarCompra extends ActividadBase {
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("cliente", jsonCliente.toString());
                                 editor.commit();
-
                                 //habilitar boton cliente y facturacion
-
                                 facturar.setEnabled(true);
-
                                 Toast toast = Toast.makeText(getApplicationContext(), "Cliente " + nuevo.getRfc() + " encontrado",
                                         Toast.LENGTH_SHORT);
                                 colocarDatosClientes();
@@ -269,8 +264,6 @@ public class FacturarCompra extends ActividadBase {
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                         pDialog.hide();
-
-
                     }
                 }
         ) {
@@ -310,10 +303,6 @@ public class FacturarCompra extends ActividadBase {
                                 intent = new Intent(context, VistaFactura.class);
                                 intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
                                 startActivity(intent);
-
-
-
-
                             } else {
                                 cargarDialog("Error , ¿Desea re-intentar?",2);
                                 Log.d(TAG, "*******************    Error     *****************************");
@@ -330,8 +319,6 @@ public class FacturarCompra extends ActividadBase {
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                         pDialog.hide();
-
-
                     }
                 }
         ) {
@@ -355,7 +342,6 @@ public class FacturarCompra extends ActividadBase {
             builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent;
-
                     intent = new Intent(context, RegistrarCliente.class);
                     intent.putExtra(Extras.ID_COMPRA, compraEncontrada.getID());
                     intent.putExtra(Extras.ID_FRANQUICIA, itemDetallado.getId());
@@ -373,17 +359,14 @@ public class FacturarCompra extends ActividadBase {
                     String itu = Compra.getCompraSelect().getITU();
                     String idCliente = Cliente.getClienteSelec().getIdCliente();
                     peticionFacturar(ServicioWeb.urlBase + ServicioWeb.FACTURAR_JSON, itu, idCliente);
-
                 }
             }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-
                 }
             });
         }
         AlertDialog alert = builder.create();
         alert.show();
-
     }
 
     /*
@@ -416,7 +399,6 @@ public class FacturarCompra extends ActividadBase {
         String itu = Compra.getCompraSelect().getITU();
         String idCliente = Cliente.getClienteSelec().getIdCliente();
         peticionFacturar(ServicioWeb.urlBase + ServicioWeb.FACTURAR_JSON, itu, idCliente);
-
     }
 
 

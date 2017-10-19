@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Facturacion Movil</string>
     <string name="ver_cliente_toolbar">Ver Cliente</string>
-    <string name="registrar_cliente_toolbar">Registrar Cliente</string>
-    <string name="eliminar_cliente_toolbar">Eliminar Cliente</string>
+    <string name="registrar_cliente_toolbar">Buscar Cliente</string>
+    <string name="eliminar_cliente_toolbar">Cerrar Cliente</string>
 
     <string name="title_activity_actividad_principal">Facturacion Movil</string>
     <string name="nombre_transicion_imagen">imagen_compartida</string>

@@ -50,6 +50,8 @@ public class VistaFactura extends ActividadBase {
     private Button botonPDF, botonXML, botonMain;
     private String colorTexto, colorFondo;
 
+    private Uri archivoPdf, archivoXML ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +81,12 @@ public class VistaFactura extends ActividadBase {
         }
 
         usarToolbar();
+
         ActivityCompat.requestPermissions(VistaFactura.this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 1);
-
+        guardarPDF();
+        guardarXML();
 
     }
 
@@ -92,8 +96,6 @@ public class VistaFactura extends ActividadBase {
         toolbar.setTitleTextColor(Color.parseColor(colorTexto));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Proceso final factura");
-
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,18 +107,10 @@ public class VistaFactura extends ActividadBase {
         return super.onOptionsItemSelected(item);
     }
 
-    public void guardarPDF(View view) {
-        /*Log.d(TAG, "*******************    PDF     *****************************");
-        Log.d(TAG, facturaGenerada.getPdf().toString());
-        */
-        //readPermission();
-        Date hoy = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String fecha = format.format(hoy);
-        fecha = fecha + " " + itemDetallado.getRfc();
-        Uri u = Archivos.base64ToPdfExternal(facturaGenerada.getPdf(), fecha);
+    public void verPdf(View view){
+
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(u, "application/pdf");
+        intent.setDataAndType(archivoPdf, "application/pdf");
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         Intent intent1 = Intent.createChooser(intent, "Abrir con");
         try {
@@ -125,29 +119,50 @@ public class VistaFactura extends ActividadBase {
             // Instruct the user to install a PDF reader here, or something
             e.printStackTrace();
         }
-
     }
 
-    public void guardarXML(View view) {
+    public void verXml(View view){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(archivoXML, "Application/xml");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        Intent intent1 = Intent.createChooser(intent, "Abrir con");
+        try {
+            startActivity(intent1);
+        } catch (ActivityNotFoundException e) {
+            // Instruct the user to install a PDF reader here, or something
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void guardarPDF() {
+        Date hoy = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String fecha = format.format(hoy);
+        fecha = fecha + " " + itemDetallado.getRfc();
+        archivoPdf = Archivos.base64ToPdfExternal(facturaGenerada.getPdf(), fecha);
+        if(archivoPdf != null){
+            Toast toast = Toast.makeText(getApplicationContext(), "Se guardo el archiv PDF",
+                    Toast.LENGTH_SHORT);
+        }
+    }
+
+    public void guardarXML() {
         /*
         Log.d(TAG, "*******************    XML     *****************************");
         Log.d(TAG, facturaGenerada.getXml().toString());
         */
         Date hoy = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String fecha = format.format(hoy);
         fecha = fecha + " " + itemDetallado.getRfc();
-        Uri u = Archivos.XMLExternal(facturaGenerada.getXml(), fecha);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(u, "Application/xml");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        Intent intent1 = Intent.createChooser(intent, "Abrir con");
-        try {
-            startActivity(intent1);
-        } catch (ActivityNotFoundException e) {
-            // Instruct the user to install a PDF reader here, or something
-            e.printStackTrace();
+        archivoXML = Archivos.XMLExternal(facturaGenerada.getXml(), fecha);
+        if(archivoXML != null){
+            Toast toast = Toast.makeText(getApplicationContext(), "Se guardo el archiv XML",
+                    Toast.LENGTH_SHORT);
         }
+
     }
 
     public void toMain(View view) {
@@ -172,6 +187,15 @@ public class VistaFactura extends ActividadBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent home = new Intent(this, actividad_principal.class);
+
+        home.addCategory(Intent.CATEGORY_HOME);
+        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(home);
     }
 
     @Override

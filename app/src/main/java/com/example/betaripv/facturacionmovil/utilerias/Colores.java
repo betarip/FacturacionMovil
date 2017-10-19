@@ -116,12 +116,8 @@ public class Colores {
 
     public static void setColoresEdit(EditText edt, Franquicia f, final String fondo) {
 
-        //edt.setBackgroundColor(Color.parseColor(f.getColorSecundario()));
         int colorFondo = Color.parseColor(fondo);
         edt.setTextColor(Color.parseColor(textColor(colorFondo)));
-        //edt.set
-        //edt.setHintTextColor();
-
         int[] colors = new int[] {
                 f.getColorSecundarioLight(),
                 Color.BLUE,

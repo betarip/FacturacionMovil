@@ -19,11 +19,14 @@ import java.io.IOException;
 
 public class Archivos {
     public static final String TAG = Archivos.class.getSimpleName();
-
+    static File f = new File(Environment.getExternalStorageDirectory() +File.separator+"facturas");
 
     public static Uri base64ToPdfExternal(String baseString, String fileName) {
         Uri u = null;
-        File dwldsPath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName + ".pdf");
+        crearDirectorioSiNoExiste();
+        File dwldsPath = new File(Environment.getExternalStorageDirectory() +File.separator+"facturas" +File.separator+ fileName + ".pdf");
+        //File f = new File()
+
         byte[] pdfAsBytes = Base64.decode(baseString, 0);
         FileOutputStream os = null;
         try {
@@ -43,14 +46,21 @@ public class Archivos {
 
     }
 
+    public static void crearDirectorioSiNoExiste(){
+        if(!Archivos.f.exists()){
+            f.mkdirs();
+        }
+    }
+
     public static Uri XMLExternal(String xml, String fileName) {
         Uri u = null;
-        File dwldsPath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName + ".xml");
-        byte[] pdfAsBytes = xml.getBytes();
+        crearDirectorioSiNoExiste();
+        File dwldsPath = new File(Environment.getExternalStorageDirectory() +File.separator+"facturas" +File.separator+ fileName + ".xml");
+        byte[] xmlAsBytes = xml.getBytes();
         FileOutputStream os = null;
         try {
             os = new FileOutputStream(dwldsPath, false);
-            os.write(pdfAsBytes);
+            os.write(xmlAsBytes);
             os.flush();
             os.close();
             u = Uri.fromFile(dwldsPath);
