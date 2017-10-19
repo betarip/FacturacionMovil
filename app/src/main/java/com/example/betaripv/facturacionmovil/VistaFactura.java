@@ -3,16 +3,19 @@ package com.example.betaripv.facturacionmovil;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +31,8 @@ import com.example.betaripv.facturacionmovil.utilerias.Archivos;
 import com.example.betaripv.facturacionmovil.utilerias.Colores;
 import com.example.betaripv.facturacionmovil.utilerias.Extras;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -109,7 +114,18 @@ public class VistaFactura extends ActividadBase {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String fecha = format.format(hoy);
         fecha = fecha + " " + itemDetallado.getRfc();
-        Archivos.base64ToPdf(facturaGenerada.getPdf(), fecha);
+        Uri u = Archivos.base64ToPdfExternal(facturaGenerada.getPdf(), fecha);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(u, "application/pdf");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        Intent intent1 = Intent.createChooser(intent, "Abrir con");
+        try {
+            startActivity(intent1);
+        } catch (ActivityNotFoundException e) {
+            // Instruct the user to install a PDF reader here, or something
+            e.printStackTrace();
+        }
+
     }
 
     public void guardarXML(View view) {
@@ -117,6 +133,21 @@ public class VistaFactura extends ActividadBase {
         Log.d(TAG, "*******************    XML     *****************************");
         Log.d(TAG, facturaGenerada.getXml().toString());
         */
+        Date hoy = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = format.format(hoy);
+        fecha = fecha + " " + itemDetallado.getRfc();
+        Uri u = Archivos.XMLExternal(facturaGenerada.getXml(), fecha);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(u, "Application/xml");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        Intent intent1 = Intent.createChooser(intent, "Abrir con");
+        try {
+            startActivity(intent1);
+        } catch (ActivityNotFoundException e) {
+            // Instruct the user to install a PDF reader here, or something
+            e.printStackTrace();
+        }
     }
 
     public void toMain(View view) {

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 public class ActividadBase extends AppCompatActivity {
 
     // Activity code here
+    public static final String TAG = ActividadBase.class.getSimpleName();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,6 +60,9 @@ public class ActividadBase extends AppCompatActivity {
         }
 
         if (id == R.id.eliminar) {
+            Log.d(TAG, "*******************    Activity     *****************************");
+            Log.d(TAG, this.getClass().getSimpleName());
+
             if(Cliente.isSelected()) {
                 SharedPreferences pref = getSharedPreferences("SPCliente", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
@@ -65,7 +70,10 @@ public class ActividadBase extends AppCompatActivity {
                 editor.clear();
                 editor.commit();
                 Cliente.cleanClienteSelec();
-                onBackPressed();
+                finish();
+                startActivity(getIntent());
+                //onBackPressed();
+
             }else{
                 mostrarMensaje("No existe informacion del cliente en el telefono");
             }
@@ -83,6 +91,7 @@ public class ActividadBase extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
     public void mostrarMensaje(String mensaje) {
         Toast toast = Toast.makeText(getApplicationContext(), mensaje,
