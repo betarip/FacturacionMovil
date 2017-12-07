@@ -31,7 +31,7 @@
             android:id="@+id/btnPDF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Guardar PDF"
+            android:text="Ver PDF"
             android:onClick="verPdf" />
 
 
@@ -39,7 +39,7 @@
             android:id="@+id/btnXML"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Guardar XML"
+            android:text="Ver XML"
             android:onClick="verXml" />
 
         <Button

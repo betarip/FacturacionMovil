@@ -122,7 +122,7 @@ public class RegistrarCliente extends ActividadBase {
 
         view = findViewById(R.id.principal);
 
-        debug();
+        //debug();
         /*
         colorTexto = Colores.textColor(Color.parseColor(itemDetallado.getColorPrincipal()));
         colorFondo = Colores.backgroundColor(Color.parseColor(itemDetallado.getColorSecundario()));
